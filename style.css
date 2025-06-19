@@ -95,7 +95,9 @@ header {
 .theme-toggle {
   margin-left: 20px;
 }
-
+.theme-icon {
+  font-size: 18px;
+}
 .switch {
   position: relative;
   display: inline-block;
@@ -188,8 +190,8 @@ input:checked + .slider::before {
   color: var(--hover-text);
   transform: scale(1.02);
 }
+
 header,
-footer,
 .toolbar,
 .editor,
 .canvas {
@@ -281,17 +283,17 @@ footer,
   background: #d32f2f;
 }
 
-footer {
+.footer {
   padding: 10px 20px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  border-top: 1px solid var(--border);
+  /* border-top: 1px solid var(--border); */
 }
 
-footer button {
+.footer button {
   padding: 8px 16px;
-  background-color: #333;
+  background-color: var(--accent);
   color: white;
   border: none;
   border-radius: 6px;

@@ -123,7 +123,6 @@ function extractCanvasWithCSS() {
       }
     );
     html += formattedHTML + "\n";
-    
   });
 
   localStorage.setItem("canvas-html", html);
@@ -271,50 +270,115 @@ function showProperties(el) {
 
   const computed = window.getComputedStyle(el);
   if (type === "text") {
-    editor.innerHTML += `
-      <label>Text:</label>
-      <input type="text" value="${
-        el.textContent
-      }" onchange="updateText(this.value)" />
-      <label>Font Size:</label>
-      <input type="number" value="${computed.fontSize.replace(
-        "px",
-        ""
-      )}" onchange="selectedElement.style.fontSize = this.value + 'px'; extractCanvasWithCSS();" />
-      <label>Color:</label>
-      <input type="color" value="${rgbToHex(
-        computed.color
-      )}" onchange="selectedElement.style.color = this.value; extractCanvasWithCSS();" />
-      <label>Font Weight:</label>
-      <select onchange="selectedElement.style.fontWeight = this.value; extractCanvasWithCSS();">
-        <option value="normal" ${
-          computed.fontWeight === "normal" ? "selected" : ""
-        }>Normal</option>
-        <option value="bold" ${
-          computed.fontWeight === "bold" ? "selected" : ""
-        }>Bold</option>
-        <option value="bolder" ${
-          computed.fontWeight === "bolder" ? "selected" : ""
-        }>Bolder</option>
-        <option value="lighter" ${
-          computed.fontWeight === "lighter" ? "selected" : ""
-        }>Lighter</option>
-      </select>`;
+    const textLabel = document.createElement("label");
+    textLabel.textContent = "Text:";
+    const textInput = document.createElement("input");
+    textInput.type = "text";
+    textInput.value = el.textContent;
+    textInput.addEventListener("input", (e) => {
+      el.textContent = e.target.value;
+      extractCanvasWithCSS();
+    });
+
+    const fontSizeLabel = document.createElement("label");
+    fontSizeLabel.textContent = "Font Size:";
+    const fontSizeInput = document.createElement("input");
+    fontSizeInput.type = "number";
+    fontSizeInput.value = parseInt(computed.fontSize);
+    fontSizeInput.addEventListener("input", (e) => {
+      el.style.fontSize = e.target.value + "px";
+      extractCanvasWithCSS();
+    });
+
+    const colorLabel = document.createElement("label");
+    colorLabel.textContent = "Color:";
+    const colorInput = document.createElement("input");
+    colorInput.type = "color";
+    colorInput.value = rgbToHex(computed.color);
+    colorInput.addEventListener("input", (e) => {
+      el.style.color = e.target.value;
+      extractCanvasWithCSS();
+    });
+
+    const weightLabel = document.createElement("label");
+    weightLabel.textContent = "Font Weight:";
+    const weightSelect = document.createElement("select");
+    ["normal", "bold", "bolder", "lighter"].forEach((weight) => {
+      const opt = document.createElement("option");
+      opt.value = weight;
+      opt.textContent = weight;
+      if (computed.fontWeight === weight) opt.selected = true;
+      weightSelect.appendChild(opt);
+    });
+    weightSelect.addEventListener("change", (e) => {
+      el.style.fontWeight = e.target.value;
+      extractCanvasWithCSS();
+    });
+
+    editor.append(
+      textLabel,
+      textInput,
+      fontSizeLabel,
+      fontSizeInput,
+      colorLabel,
+      colorInput,
+      weightLabel,
+      weightSelect
+    );
   } else if (type === "image") {
     const img = el.querySelector("img");
-    editor.innerHTML += `
-      <label>Image URL:</label>
-      <input type="text" value="${img.src}" onchange="updateImage(this.value)" />
-      `;
+
+    const urlLabel = document.createElement("label");
+    urlLabel.textContent = "Image URL:";
+    const urlInput = document.createElement("input");
+    urlInput.type = "text";
+    urlInput.value = img.src;
+    urlInput.addEventListener("input", (e) => {
+      img.src = e.target.value;
+      extractCanvasWithCSS();
+    });
+
+    const widthLabel = document.createElement("label");
+    widthLabel.textContent = "Width (px):";
+    const widthInput = document.createElement("input");
+    widthInput.type = "number";
+    widthInput.value = img.width;
+    widthInput.addEventListener("input", (e) => {
+      img.style.width = e.target.value + "px";
+      extractCanvasWithCSS();
+    });
+
+    editor.append(urlLabel, urlInput, widthLabel, widthInput);
   } else if (type === "button") {
     const btn = el.querySelector("button");
-    editor.innerHTML += `
-      <label>Button Label:</label>
-      <input type="text" value="${btn.textContent}" onchange="updateButton(this.value)" />
-      `;
+
+    const labelLabel = document.createElement("label");
+    labelLabel.textContent = "Button Label:";
+    const labelInput = document.createElement("input");
+    labelInput.type = "text";
+    labelInput.value = btn.textContent;
+    labelInput.addEventListener("input", (e) => {
+      btn.textContent = e.target.value;
+      extractCanvasWithCSS();
+    });
+
+    const colorLabel = document.createElement("label");
+    colorLabel.textContent = "Color:";
+    const colorInput = document.createElement("input");
+    colorInput.type = "color";
+    colorInput.value = rgbToHex(computed.color);
+    colorInput.addEventListener("input", (e) => {
+      el.style.color = e.target.value;
+      extractCanvasWithCSS();
+    });
+
+    editor.append(labelLabel, labelInput, colorLabel, colorInput);
   }
 
-  editor.innerHTML += `<button onclick="deleteElement()">🗑 Delete</button>`;
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "🗑 Delete";
+  deleteBtn.addEventListener("click", deleteElement);
+  editor.appendChild(deleteBtn);
 }
 
 function rgbToHex(rgb) {
