@@ -93,6 +93,8 @@ header {
 /* Theme Toggle */
 .theme-toggle {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
   margin-left: 20px;
 }
