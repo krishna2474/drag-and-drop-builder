@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Drag and Drop - Website Builder</title>
+  </head>
+  <body>
+    <header>
+      <h2>Drag and Drop Website Builder</h2>
+      <div class="mode-toggle">
+        <button id="designModeBtn" class="active">Design</button>
+        <button id="codeModeBtn" class="inactive">Code</button>
+      </div>
+
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="themeSwitch" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </header>
+    <div class="container">
+      <!-- SideBar to Add Elements -->
+      <aside class="toolbar">
+        <h2>Add Elements</h2>
+        <div class="draggable" data-type="text" draggable="true">Text</div>
+        <div class="draggable" data-type="image" draggable="true">Image</div>
+        <div class="draggable" data-type="button" draggable="true">Button</div>
+      </aside>
+
+      <!-- Canvas to drop Elements -->
+      <main class="canvas" id="canvas">
+        <div class="placeholder">Drop Elements here</div>
+      </main>
+
+      <!--  Code View -->
+      <pre
+        id="codeView"
+        class="hidden"
+      ><code class="language-html"></code></pre>
+
+      <!-- Properties Panel -->
+      <aside class="editor" id="editor">
+        <h2>Properties</h2>
+        <p class="hint">Select an element to edit its properties</p>
+      </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <button id="clearCanvas">Clear Canvas</button>
+      <button id="exportHTML">Export HTML</button>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
