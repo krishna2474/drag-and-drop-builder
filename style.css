@@ -34,7 +34,6 @@ body.dark {
   --input-border: rgba(255, 255, 255, 0.4);
   --glass-bg: rgba(30, 30, 30, 0.3);
   --glass-border: rgba(255, 255, 255, 0.1);
-  /* --shadow: rgba(255, 255, 255, 0.2); */
   --shadow: rgba(0, 0, 0, 0.4);
 
   --extra: rgba(255, 255, 255, 0.1);
@@ -192,6 +191,7 @@ input:checked + .slider::before {
 }
 
 header,
+footer,
 .toolbar,
 .editor,
 .canvas {
@@ -288,7 +288,8 @@ header,
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  /* border-top: 1px solid var(--border); */
+background-color: var(--panel);
+  border-top: 1px solid var(--border);
 }
 
 .footer button {
